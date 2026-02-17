@@ -8,53 +8,55 @@ export interface InlineKeyboardMarkup {
 }
 
 export declare namespace InlineKeyboardButton {
-  interface AbstractInlineKeyboardButton {
+  interface AbstractInlineKeyboard {
     /** Label text on the button */
     text: string;
+    /** The text to be copied to the clipboard; 1-256 characters */
+    style?: 'primary' | 'success' | 'danger',
+    /** Style of the button. Must be one of "danger" (red), "success" (green) or "primary" (blue). If omitted, then an app-specific style is used. */
+    customEmojiId?: string,
   }
-  export interface UrlButton extends AbstractInlineKeyboardButton {
+  export interface Url extends AbstractInlineKeyboard {
     /** HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings. */
     url: string;
   }
-  export interface CallbackButton extends AbstractInlineKeyboardButton {
+  export interface Callback extends AbstractInlineKeyboard {
     /** Data to be sent in a callback query to the bot when the button is pressed, 1-64 bytes */
     callback_data: string;
   }
-  export interface WebAppButton extends AbstractInlineKeyboardButton {
+  export interface WebApp extends AbstractInlineKeyboard {
     /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account. */
     web_app: WebAppInfo;
   }
-  export interface LoginButton extends AbstractInlineKeyboardButton {
+  export interface Login extends AbstractInlineKeyboard {
     /** An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget. */
     login_url: LoginUrl;
   }
-  export interface SwitchInlineButton extends AbstractInlineKeyboardButton {
+  export interface SwitchInline extends AbstractInlineKeyboard {
     /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
     switch_inline_query: string;
   }
-  export interface SwitchInlineCurrentChatButton
-    extends AbstractInlineKeyboardButton {
+  export interface SwitchInlineCurrentChat extends AbstractInlineKeyboard {
     /** If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
 
     This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
     switch_inline_query_current_chat: string;
   }
-  export interface SwitchInlineChosenChatButton
-    extends AbstractInlineKeyboardButton {
+  export interface SwitchInlineChosenChat extends AbstractInlineKeyboard {
     /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
-  export interface CopyTextButton extends AbstractInlineKeyboardButton {
+  export interface CopyText extends AbstractInlineKeyboard {
     /** Description of the button that copies the specified text to the clipboard. */
     copy_text: CopyTextButton;
   }
-  export interface GameButton extends AbstractInlineKeyboardButton {
+  export interface Game extends AbstractInlineKeyboard {
     /** Description of the game that will be launched when the user presses the button.
 
     NOTE: This type of button must always be the first button in the first row. */
     callback_game: CallbackGame;
   }
-  export interface PayButton extends AbstractInlineKeyboardButton {
+  export interface Pay extends AbstractInlineKeyboard {
     /** Specify True, to send a Pay button.
 
     NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages. */
@@ -64,15 +66,15 @@ export declare namespace InlineKeyboardButton {
 
 /** This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify type of the button. */
 export type InlineKeyboardButton =
-  | InlineKeyboardButton.CallbackButton
-  | InlineKeyboardButton.GameButton
-  | InlineKeyboardButton.LoginButton
-  | InlineKeyboardButton.PayButton
-  | InlineKeyboardButton.SwitchInlineButton
-  | InlineKeyboardButton.SwitchInlineCurrentChatButton
-  | InlineKeyboardButton.SwitchInlineChosenChatButton
-  | InlineKeyboardButton.UrlButton
-  | InlineKeyboardButton.WebAppButton;
+  | InlineKeyboardButton.Callback
+  | InlineKeyboardButton.Game
+  | InlineKeyboardButton.Login
+  | InlineKeyboardButton.Pay
+  | InlineKeyboardButton.SwitchInline
+  | InlineKeyboardButton.SwitchInlineCurrentChat
+  | InlineKeyboardButton.SwitchInlineChosenChat
+  | InlineKeyboardButton.Url
+  | InlineKeyboardButton.WebApp;
 
 /** This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in.
 Telegram apps support these buttons as of version 5.7. */
@@ -168,6 +170,14 @@ export declare namespace KeyboardButton {
     /** Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed */
     text: string;
   }
+  export interface Text extends Common {
+    /** Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed */
+    text: string;
+    /** The text to be copied to the clipboard; 1-256 characters */
+    style?: 'primary' | 'success' | 'danger',
+    /** Style of the button. Must be one of "danger" (red), "success" (green) or "primary" (blue). If omitted, then an app-specific style is used. */
+    customEmojiId?: string,
+  }
   export interface RequestUsers extends Common {
     /** If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only. */
     request_users: KeyboardButtonRequestUsers;
@@ -196,6 +206,7 @@ export declare namespace KeyboardButton {
 
 /** This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_user, request_chat, request_contact, request_location, and request_poll are mutually exclusive. */
 export type KeyboardButton =
+  | KeyboardButton.Text
   | KeyboardButton.RequestUsers
   | KeyboardButton.RequestChat
   | KeyboardButton.RequestPoll

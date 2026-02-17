@@ -1756,28 +1756,6 @@ export type ApiMethods<F> = {
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
     message_id?: number;
     /** Required if chat_id and message_id are not specified. Identifier of the inline message */
-    inline_message_id?: undefined;
-    /** New text of the message, 1-4096 characters after entities parsing */
-    text: string;
-    /** Mode for parsing entities in the message text. See formatting options for more details. */
-    parse_mode?: ParseMode;
-    /** A list of special entities that appear in message text, which can be specified instead of parse_mode */
-    entities?: MessageEntity[];
-    /** Link preview generation options for the message */
-    link_preview_options?: LinkPreviewOptions;
-    /** An object for an inline keyboard. */
-    reply_markup?: InlineKeyboardMarkup;
-  }): Update.Edited & Message.TextMessage & Message.BusinessSentMessage;
-
-  /** Use this method to edit inline text and game messages. On success, True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
-  editMessageText(args: {
-    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
-    business_connection_id?: string;
-    /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`) */
-    chat_id?: undefined;
-    /** Required if inline_message_id is not specified. Identifier of the message to edit */
-    message_id?: undefined;
-    /** Required if chat_id and message_id are not specified. Identifier of the inline message */
     inline_message_id?: string;
     /** New text of the message, 1-4096 characters after entities parsing */
     text: string;
@@ -1789,7 +1767,7 @@ export type ApiMethods<F> = {
     link_preview_options?: LinkPreviewOptions;
     /** An object for an inline keyboard. */
     reply_markup?: InlineKeyboardMarkup;
-  }): true;
+  }): (Update.Edited & Message.TextMessage & Message.BusinessSentMessage) | true;
 
   /** Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageCaption(args: {
