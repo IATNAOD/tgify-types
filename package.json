@@ -1,0 +1,36 @@
+{
+  "name": "@tgify/types",
+  "private": false,
+  "version": "9.2.0",
+  "description": "Type declarations for the Telegram API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgify/types.git"
+  },
+  "keywords": [
+    "telegram",
+    "tgify",
+    "bot",
+    "api",
+    "types",
+    "typings"
+  ],
+  "scripts": {
+    "prepare": "deno task backport"
+  },
+  "author": "IATNAOD",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tgify/types/issues"
+  },
+  "homepage": "https://github.com/tgify/types#readme",
+  "files": [
+    "*.d.ts",
+    "index.js"
+  ],
+  "devDependencies": {
+    "deno-bin": "^2.1.6"
+  }
+}
