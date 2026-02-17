@@ -108,4 +108,4 @@ This project is written for Deno and built for Node. Running `npm prepare` runs 
 
 ## Where do the types come from
 
-They're handwritten. [Typegram](https://github.com/KnorpelSenf/typegram) was started by [@KnorpelSenf](https://github.com/KnorpelSenf), who eventually used it as a starting point for grammY's [types](https://github.com/grammyjs/types) package. `@tgify/types` started as a fork of Typegram, specialised for Tgify. It is now independently maintained and updated from the Bot API directly.
+They're handwritten. [Typegram](https://github.com/KnorpelSenf/typegram) was started by [@KnorpelSenf](https://github.com/KnorpelSenf), who eventually used it as a starting point for grammY's [types](https://github.com/grammyjs/types) package. `@tgify/types` started as a fork of @telegraf/types, specialised for Tgify. It is now independently maintained and updated from the Bot API directly.
