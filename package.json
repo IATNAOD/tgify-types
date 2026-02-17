@@ -6,7 +6,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tgify/types.git"
+    "url": "git+https://github.com/IATNAOD/tgify-types.git"
   },
   "keywords": [
     "telegram",
@@ -23,9 +23,9 @@
   "types": "index.d.ts",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tgify/types/issues"
+    "url": "https://github.com/IATNAOD/tgify-types/issues"
   },
-  "homepage": "https://github.com/tgify/types#readme",
+  "homepage": "https://github.com/IATNAOD/tgify-types#readme",
   "files": [
     "*.d.ts",
     "index.js"
