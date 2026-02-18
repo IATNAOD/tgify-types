@@ -14,7 +14,7 @@ export declare namespace InlineKeyboardButton {
     /** The text to be copied to the clipboard; 1-256 characters */
     style?: 'primary' | 'success' | 'danger',
     /** Style of the button. Must be one of "danger" (red), "success" (green) or "primary" (blue). If omitted, then an app-specific style is used. */
-    customEmojiId?: string,
+    icon_custom_emoji_id?: string,
   }
   export interface Url extends AbstractInlineKeyboard {
     /** HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings. */
@@ -176,7 +176,7 @@ export declare namespace KeyboardButton {
     /** The text to be copied to the clipboard; 1-256 characters */
     style?: 'primary' | 'success' | 'danger',
     /** Style of the button. Must be one of "danger" (red), "success" (green) or "primary" (blue). If omitted, then an app-specific style is used. */
-    customEmojiId?: string,
+    icon_custom_emoji_id?: string,
   }
   export interface RequestUsers extends Common {
     /** If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only. */
