@@ -22,19 +22,19 @@ export interface PassportFile {
 export interface EncryptedPassportElement {
   /** Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”. */
   type:
-    | "personal_details"
-    | "passport"
-    | "driver_license"
-    | "identity_card"
-    | "internal_passport"
-    | "address"
-    | "utility_bill"
-    | "bank_statement"
-    | "rental_agreement"
-    | "passport_registration"
-    | "temporary_registration"
-    | "phone_number"
-    | "email";
+  | "personal_details"
+  | "passport"
+  | "driver_license"
+  | "identity_card"
+  | "internal_passport"
+  | "address"
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration"
+  | "phone_number"
+  | "email";
   /** Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials. */
   data?: string;
   /** User's verified phone number; available only for “phone_number” type */
@@ -93,12 +93,12 @@ export interface PassportElementErrorDataField {
   source: "data";
   /** The section of the user's Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address” */
   type:
-    | "personal_details"
-    | "passport"
-    | "driver_license"
-    | "identity_card"
-    | "internal_passport"
-    | "address";
+  | "personal_details"
+  | "passport"
+  | "driver_license"
+  | "identity_card"
+  | "internal_passport"
+  | "address";
   /** Name of the data field which has the error */
   field_name: string;
   /** Base64-encoded data hash */
@@ -149,11 +149,11 @@ export interface PassportElementErrorFile {
   source: "file";
   /** The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration” */
   type:
-    | "utility_bill"
-    | "bank_statement"
-    | "rental_agreement"
-    | "passport_registration"
-    | "temporary_registration";
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration";
   /** Base64-encoded file hash */
   file_hash: string;
   /** Error message */
@@ -166,11 +166,11 @@ export interface PassportElementErrorFiles {
   source: "files";
   /** The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration” */
   type:
-    | "utility_bill"
-    | "bank_statement"
-    | "rental_agreement"
-    | "passport_registration"
-    | "temporary_registration";
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration";
   /** List of base64-encoded file hashes */
   file_hashes: string[];
   /** Error message */
@@ -183,15 +183,15 @@ export interface PassportElementErrorTranslationFile {
   source: "translation_file";
   /** Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration” */
   type:
-    | "passport"
-    | "driver_license"
-    | "identity_card"
-    | "internal_passport"
-    | "utility_bill"
-    | "bank_statement"
-    | "rental_agreement"
-    | "passport_registration"
-    | "temporary_registration";
+  | "passport"
+  | "driver_license"
+  | "identity_card"
+  | "internal_passport"
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration";
   /** Base64-encoded file hash */
   file_hash: string;
   /** Error message */
@@ -204,15 +204,15 @@ export interface PassportElementErrorTranslationFiles {
   source: "translation_files";
   /** Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration” */
   type:
-    | "passport"
-    | "driver_license"
-    | "identity_card"
-    | "internal_passport"
-    | "utility_bill"
-    | "bank_statement"
-    | "rental_agreement"
-    | "passport_registration"
-    | "temporary_registration";
+  | "passport"
+  | "driver_license"
+  | "identity_card"
+  | "internal_passport"
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration";
   /** List of base64-encoded file hashes */
   file_hashes: string[];
   /** Error message */

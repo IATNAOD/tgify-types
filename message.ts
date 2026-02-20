@@ -9,10 +9,12 @@ import type {
   SuggestedPostPrice,
   UniqueGift,
   User,
-} from "./manage.ts";
-import type { InlineKeyboardMarkup } from "./markup.ts";
-import type { PassportData } from "./passport.ts";
-import type { Invoice, RefundedPayment, SuccessfulPayment } from "./payment.ts";
+  ChatOwnerLeft,
+  ChatOwnerChanged
+} from "./manage.js";
+import type { InlineKeyboardMarkup } from "./markup.js";
+import type { PassportData } from "./passport.js";
+import type { Invoice, RefundedPayment, SuccessfulPayment } from "./payment.js";
 
 export declare namespace Message {
   export interface ServiceMessage {
@@ -181,6 +183,14 @@ export declare namespace Message {
     /** A member was removed from the group, information about them (this member may be the bot itself) */
     left_chat_member: User;
   }
+  export interface ChatOwnerLeftMessage extends ServiceMessage {
+    /** A member was removed from the group, information about them (this member may be the bot itself) */
+    chat_owner_left: ChatOwnerLeft;
+  }
+  export interface ChatOwnerChangedMessage extends ServiceMessage {
+    /** A member was removed from the group, information about them (this member may be the bot itself) */
+    chat_owner_changed: ChatOwnerChanged;
+  }
   export interface NewChatTitleMessage extends ServiceMessage {
     /** A chat title was changed to this value */
     new_chat_title: string;
@@ -248,6 +258,10 @@ export declare namespace Message {
   export interface UniqueGiftMessage extends ServiceMessage {
     /** Service message: a unique gift was sent or received */
     unique_gift: UniqueGiftInfo;
+  }
+  export interface GiftUpgradeSentMessage extends ServiceMessage {
+    /** Service message: a unique gift was sent or received */
+    gift_upgrade_sent: GiftInfo;
   }
   export interface ConnectedWebsiteMessage extends ServiceMessage {
     /** The domain name of the website on which the user has logged in. More about Telegram Login » */
@@ -1008,6 +1022,22 @@ export interface Story {
   id: number;
 }
 
+/** This object represents a video file of a specific quality. */
+export interface VideoQuality {
+  /** Identifier for this file, which can be used to download or reuse the file */
+  file_id: string;
+  /** Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
+  file_unique_id: string;
+  /** Video width */
+  width: number;
+  /** Video height */
+  height: number;
+  /** Codec that was used to encode the video, for example, “h264”, “h265”, or “av01” */
+  codec: string;
+  /** File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value. */
+  file_size: number;
+}
+
 /** This object represents a video file. */
 export interface Video {
   /** Identifier for this file, which can be used to download or reuse the file */
@@ -1026,6 +1056,8 @@ export interface Video {
   cover?: PhotoSize[];
   /** Timestamp in seconds from which the video will play in the message */
   start_timestamp?: number;
+  /** List of available qualities of the video */
+  qualities?: VideoQuality[];
   /** Original filename as defined by the sender */
   file_name?: string;
   /** MIME type of the file as defined by the sender */
@@ -1123,6 +1155,8 @@ export interface ChecklistTask {
   text_entities?: MessageEntity[];
   /** User that completed the task; omitted if the task wasn't completed */
   completed_by_user?: User;
+  /** Chat that completed the task; omitted if the task wasn't completed by a chat */
+  completed_by_chat?: Chat;
   /** Point in time (Unix timestamp) when the task was completed; 0 if the task wasn't completed */
   completion_date?: number;
 }
@@ -1330,14 +1364,6 @@ export interface Venue {
   google_place_type?: string;
 }
 
-/** This object represents a message about a forwarded story in the chat. Currently holds no information. */
-export interface Story {
-  /** Chat that posted the story */
-  chat: Chat;
-  /** Unique identifier for the story in the chat */
-  id: number;
-}
-
 /** This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user. */
 export interface ProximityAlertTriggered {
   /** User that triggered the alert */
@@ -1474,6 +1500,8 @@ export interface ForumTopicCreated {
   icon_color: number;
   /** Unique identifier of the custom emoji shown as the topic icon */
   icon_custom_emoji_id?: string;
+  /** True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot */
+  is_name_implicit?: boolean;
 }
 
 /** This object represents a service message about an edited forum topic. */
@@ -1542,6 +1570,8 @@ export interface GiftInfo {
   convert_star_count?: number;
   /** Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift */
   prepaid_upgrade_star_count?: number;
+  /** True, if the gift's upgrade was purchased after the gift was sent */
+  is_upgrade_separate?: boolean;
   /** True, if the gift can be upgraded to a unique gift */
   can_be_upgraded?: boolean;
   /** Text of the message that was added to the gift */
@@ -1550,16 +1580,20 @@ export interface GiftInfo {
   entities?: MessageEntity[];
   /** True, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them */
   is_private?: boolean;
+  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift */
+  unique_gift_number?: number;
 }
 
 /** Describes a service message about a unique gift that was sent or received. */
 export interface UniqueGiftInfo {
   /** Information about the gift */
   gift: UniqueGift;
-  /** Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, or “resale” for gifts bought from other users */
-  origin: "upgrade" | "transfer" | "resale";
-  /** For gifts bought from other users, the price paid for the gift */
-  last_resale_star_count?: number;
+  /** Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers */
+  origin: "upgrade" | "transfer" | "resale" | 'gifted_upgrade' | 'offer';
+  /** For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins. */
+  last_resale_currency?: 'XTR' | 'TON';
+  /** For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanotoncoins */
+  last_resale_amount?: number;
   /** Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts */
   owned_gift_id?: string;
   /** Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift */

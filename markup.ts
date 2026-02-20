@@ -1,5 +1,5 @@
-import type { ChatAdministratorRights, User } from "./manage.ts";
-import type { MaybeInaccessibleMessage } from "./message.ts";
+import type { ChatAdministratorRights, User } from "./manage.js";
+import type { MaybeInaccessibleMessage } from "./message.js";
 
 /** This object represents an inline keyboard that appears right next to the message it belongs to. */
 export interface InlineKeyboardMarkup {

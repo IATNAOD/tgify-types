@@ -1,5 +1,5 @@
-import type { Chat, Gift, User } from "./manage.ts";
-import { PaidMedia } from "./message.ts";
+import type { Chat, Gift, User } from "./manage.js";
+import { PaidMedia } from "./message.js";
 
 /** This object represents a portion of the price for goods or services. */
 export interface LabeledPrice {
@@ -207,11 +207,11 @@ export declare namespace TransactionPartnerUser {
     type: "user";
     /** Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts */
     transaction_type:
-      | "invoice_payment"
-      | "paid_media_payment"
-      | "gift_purchase"
-      | "premium_purchase"
-      | "business_account_transfer";
+    | "invoice_payment"
+    | "paid_media_payment"
+    | "gift_purchase"
+    | "premium_purchase"
+    | "business_account_transfer";
     /** Information about the user */
     user: User;
   }

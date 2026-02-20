@@ -1,10 +1,11 @@
+import { Audio } from './message';
 import type {
   Location,
   Message,
   MessageEntity,
   PhotoSize,
   Sticker,
-} from "./message.ts";
+} from "./message.js";
 
 /** Describes the current status of a webhook. */
 export interface WebhookInfo {
@@ -62,6 +63,8 @@ export interface UserFromGetMe extends User {
   can_connect_to_business?: boolean;
   /** True, if the bot has a main Web App. Returned only in getMe. */
   has_main_web_app?: boolean;
+  /** True, if the bot allows users to create and delete topics in private chats. Returned only in getMe. */
+  allows_users_to_create_topics?: boolean;
 }
 
 export declare namespace Chat {
@@ -174,6 +177,14 @@ declare namespace ChatFullInfo {
     message_auto_delete_time?: number;
     /** True, if messages from the chat can't be forwarded to other chats */
     has_protected_content?: true;
+    /** For private chats, the rating of the user if any */
+    rating?: UserRating;
+    /** For private chats, the rating of the user if any */
+    first_profile_audio?: Audio;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type representing group chats returned from `getChat`. */
   export interface GroupChat extends Chat.GroupChat {
@@ -217,6 +228,10 @@ declare namespace ChatFullInfo {
     has_visible_history?: true;
     /** True, if the bot can change the group sticker set */
     can_set_sticker_set?: true;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type representing supergroup chats returned from `getChat`. */
   export interface SupergroupChat extends Chat.SupergroupChat {
@@ -278,6 +293,10 @@ declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type representing channel chats returned from `getChat`. */
   export interface ChannelChat extends Chat.ChannelChat {
@@ -313,6 +332,10 @@ declare namespace ChatFullInfo {
     has_protected_content?: true;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. */
     linked_chat_id?: number;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
 }
 
@@ -363,6 +386,14 @@ export interface UserProfilePhotos {
   total_count: number;
   /** Requested profile pictures (in up to 4 sizes each) */
   photos: PhotoSize[][];
+}
+
+/** This object represents the audios displayed on a user's profile. */
+export interface UserProfileAudios {
+  /** Total number of profile pictures the target user has */
+  total_count: number;
+  /** Requested profile audios */
+  photos: Audio[];
 }
 
 /** This object represents a chat photo. */
@@ -679,6 +710,18 @@ export interface BusinessOpeningHours {
   opening_hours: BusinessOpeningHoursInterval[];
 }
 
+/** This object describes the rating of a user based on their Telegram Star spendings. */
+export interface UserRating {
+  /** Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern. */
+  level: number;
+  /** Numerical value of the user's rating; the higher the rating, the better */
+  rating: number;
+  /** The rating value required to get the current level */
+  current_level_rating: number;
+  /** The rating value required to get to the next level; omitted if the maximum level was reached */
+  next_level_rating?: number;
+}
+
 /** Describes the position of a clickable area within a story. */
 export interface StoryAreaPosition {
   /** The abscissa of the area's center, as a percentage of the media width */
@@ -925,6 +968,8 @@ export interface ForumTopic {
   icon_color: number;
   /** Unique identifier of the custom emoji shown as the topic icon */
   icon_custom_emoji_id?: string;
+  /** True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot */
+  is_name_implicit?: boolean;
 }
 
 /** This object represents a bot command. */
@@ -1010,6 +1055,18 @@ export interface ChatBoostRemoved {
   source: ChatBoostSource;
 }
 
+/** Describes a service message about the chat owner leaving the chat. */
+export interface ChatOwnerLeft {
+  /** The user which will be the new owner of the chat if the previous owner does not return to the chat */
+  new_owner: User;
+}
+
+/** Describes a service message about an ownership change in the chat. */
+export interface ChatOwnerChanged {
+  /** The new owner of the chat */
+  new_owner: User;
+}
+
 /** This object represents a list of boosts added to a chat by a user. */
 export interface UserChatBoosts {
   /** The list of boosts added to the chat by the user */
@@ -1057,6 +1114,16 @@ export interface File {
   file_path?: string;
 }
 
+/** This object describes the background of a gift. */
+export interface GiftBackground {
+  /** Center color of the background in RGB format */
+  center_color: number;
+  /** Edge color of the background in RGB format */
+  edge_color: number;
+  /** Text color of the background in RGB format */
+  text_color: number;
+}
+
 /** This object represents a gift that can be sent by the bot. */
 export interface Gift {
   /** Unique identifier of the gift */
@@ -1067,10 +1134,22 @@ export interface Gift {
   star_count: number;
   /** The number of Telegram Stars that must be paid to upgrade the gift to a unique one */
   upgrade_star_count?: number;
+  /** True, if the gift can only be purchased by Telegram Premium subscribers */
+  is_premium?: boolean;
+  /** True, if the gift can be used (after being upgraded) to customize a user's appearance */
+  has_colors?: boolean;
   /** The total number of the gifts of this type that can be sent; for limited gifts only */
   total_count?: number;
   /** The number of remaining gifts of this type that can be sent; for limited gifts only */
   remaining_count?: number;
+  /** The total number of gifts of this type that can be sent by the bot; for limited gifts only */
+  personal_total_count?: number;
+  /** The number of remaining gifts of this type that can be sent by the bot; for limited gifts only */
+  personal_remaining_count?: number;
+  /** Background of the gift */
+  background?: GiftBackground;
+  /** The total number of different unique gifts that can be obtained by upgrading the gift */
+  unique_gift_variant_count?: number;
   /** Information about the chat that published the gift */
   publisher_chat?: Chat;
 }
@@ -1089,6 +1168,8 @@ export interface UniqueGiftModel {
   sticker: Sticker;
   /** The number of unique gifts that receive this model for every 1000 gifts upgraded */
   rarity_per_mille: number;
+  /** Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”. */
+  rarity?: 'uncommon' | 'rare' | 'epic' | 'legendary';
 }
 
 /** This object describes the symbol shown on the pattern of a unique gift. */
@@ -1123,8 +1204,26 @@ export interface UniqueGiftBackdrop {
   rarity_per_mille: number;
 }
 
+/** This object contains information about the color scheme for a user's name, message replies and link previews based on a unique gift */
+export interface UniqueGiftColors {
+  /** Custom emoji identifier of the unique gift's model */
+  model_custom_emoji_id: string;
+  /** Custom emoji identifier of the unique gift's symbol */
+  symbol_custom_emoji_id: string;
+  /** Main color used in light themes; RGB format */
+  light_theme_main_color: number;
+  /** List of 1-3 additional colors used in light themes; RGB format */
+  light_theme_other_colors: number[];
+  /** Main color used in dark themes; RGB format */
+  dark_theme_main_color: number;
+  /** List of 1-3 additional colors used in dark themes; RGB format */
+  namdark_theme_other_colorse: number[];
+}
+
 /** This object describes a unique gift that was upgraded from a regular gift. */
 export interface UniqueGift {
+  /** Identifier of the regular gift from which the gift was upgraded */
+  gift_id: string;
   /** Human-readable name of the regular gift from which this unique gift was upgraded */
   base_name: string;
   /** Unique name of the gift. This name can be used in https://t.me/nft/... links and story areas */
@@ -1137,6 +1236,14 @@ export interface UniqueGift {
   symbol: UniqueGiftSymbol;
   /** Backdrop of the gift */
   backdrop: UniqueGiftBackdrop;
+  /** True, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers */
+  is_premium?: boolean;
+  /** True, if the gift was used to craft another gift and isn't available anymore */
+  is_burned?: boolean;
+  /** True, if the gift is assigned from the TON blockchain and can't be resold or transferred in Telegram */
+  is_from_blockchain?: boolean;
+  /** The color scheme that can be used by the gift's owner for the chat's name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only */
+  colors?: UniqueGiftColors;
   /** Information about the chat that published the gift */
   publisher_chat?: Chat;
 }
@@ -1174,6 +1281,10 @@ export interface OwnedGiftRegular {
   convert_star_count?: number;
   /** Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift */
   prepaid_upgrade_star_count?: number;
+  /** True, if the gift's upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only */
+  is_upgrade_separate?: boolean;
+  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift */
+  unique_gift_number?: number;
 }
 
 /** Describes a unique gift received and owned by a user or a chat. */
@@ -1218,6 +1329,8 @@ export interface AcceptedGiftTypes {
   unique_gifts: boolean;
   /** True, if a Telegram Premium subscription is accepted */
   premium_subscription: boolean;
+  /** True, if transfers of unique gifts from channels are accepted */
+  gifts_from_channels: boolean;
 }
 
 /** Describes an amount of Telegram Stars. */

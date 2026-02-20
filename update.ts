@@ -1,4 +1,4 @@
-import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
+import type { ChosenInlineResult, InlineQuery } from "./inline.js";
 import type {
   BusinessConnection,
   BusinessMessagesDeleted,
@@ -10,19 +10,19 @@ import type {
   MessageReactionCountUpdated,
   MessageReactionUpdated,
   User,
-} from "./manage.ts";
-import type { CallbackQuery } from "./markup.ts";
+} from "./manage.js";
+import type { CallbackQuery } from "./markup.js";
 import type {
   CommonMessageBundle,
   Message,
   Poll,
   PollAnswer,
-} from "./message.ts";
+} from "./message.js";
 import type {
   PaidMediaPurchased,
   PreCheckoutQuery,
   ShippingQuery,
-} from "./payment.ts";
+} from "./payment.js";
 
 export declare namespace Update {
   /** Internal type holding properties that updates in channels share. */
