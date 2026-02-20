@@ -127,7 +127,6 @@ export declare namespace Update {
     /** New incoming pre-checkout query. Contains full information about checkout */
     pre_checkout_query: PreCheckoutQuery;
   }
-
   export interface PurchasedPaidMediaUpdate extends AbstractUpdate {
     /** A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat */
     purchased_paid_media: PaidMediaPurchased;
@@ -181,6 +180,7 @@ export type Update =
   | Update.MessageUpdate
   | Update.MyChatMemberUpdate
   | Update.PreCheckoutQueryUpdate
+  | Update.PurchasedPaidMediaUpdate
   | Update.PollAnswerUpdate
   | Update.PollUpdate
   | Update.ShippingQueryUpdate
