@@ -1,6 +1,6 @@
 # Types for the Telegram Bot API
 
-[![Bot API Version](https://img.shields.io/badge/Bot%20API-v9.2-f36caf.svg?style=flat-square&logo=Telegram&labelColor=white&color=blue)](https://core.telegram.org/bots/api) [![NPM version](https://img.shields.io/npm/v/@tgify/types?style=flat-square&logo=npm&labelColor=fff&color=c53635)](https://npmjs.com/package/@tgify/types)
+[![Bot API Version](https://img.shields.io/badge/Bot%20API-v9.4-f36caf.svg?style=flat-square&logo=Telegram&labelColor=white&color=blue)](https://core.telegram.org/bots/api) [![NPM version](https://img.shields.io/npm/v/@tgify/types?style=flat-square&logo=npm&labelColor=fff&color=c53635)](https://npmjs.com/package/@tgify/types)
 
 This is a fork of the @telegraf/types library. This project will continue updating the Telegram Bot API types, but now for @tgify/tgify. This project provides TypeScript types for the entire [Telegram Bot API](https://core.telegram.org/bots/api).
 
