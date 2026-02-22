@@ -107,7 +107,6 @@ export declare namespace Message {
     /** Message is a general file, information about the file */
     document: Document;
   }
-
   // UNSURE: To verify whether PaidMediaMessage inherits from MediaMessage
   export interface PaidMediaMessage extends CaptionableMessage {
     /** Message contains paid media; information about the paid media */
@@ -389,11 +388,14 @@ export declare namespace Message {
 export type ServiceMessageBundle =
   | Message.NewChatMembersMessage
   | Message.LeftChatMemberMessage
+  | Message.ChatOwnerLeftMessage
+  | Message.ChatOwnerChangedMessage
   | Message.NewChatTitleMessage
   | Message.NewChatPhotoMessage
   | Message.DeleteChatPhotoMessage
   | Message.GroupChatCreatedMessage
   | Message.SupergroupChatCreated
+  | Message.RefundedPaymentMessage
   | Message.ChannelChatCreatedMessage
   | Message.MessageAutoDeleteTimerChangedMessage
   | Message.MigrateToChatIdMessage
@@ -405,11 +407,16 @@ export type ServiceMessageBundle =
   | Message.ChatSharedMessage
   | Message.GiftMessage
   | Message.UniqueGiftMessage
+  | Message.GiftUpgradeSentMessage
   | Message.ConnectedWebsiteMessage
   | Message.WriteAccessAllowedMessage
   | Message.PassportDataMessage
   | Message.ProximityAlertTriggeredMessage
   | Message.BoostAddedMessage
+  | Message.ChatBackgroundSetMessage
+  | Message.ChecklistTasksDoneMessage
+  | Message.ChecklistTasksAddedMessage
+  | Message.DirectMessagePriceChangedMessage
   | Message.ForumTopicCreatedMessage
   | Message.ForumTopicEditedMessage
   | Message.ForumTopicClosedMessage
@@ -420,6 +427,12 @@ export type ServiceMessageBundle =
   | Message.GiveawayMessage
   | Message.GiveawayWinnersMessage
   | Message.GiveawayCompletedMessage
+  | Message.PaidMessagePriceChangedMessage
+  | Message.SuggestedPostApprovedMessage
+  | Message.SuggestedPostApprovalFailedMessage
+  | Message.SuggestedPostDeclinedMessage
+  | Message.SuggestedPostPaidMessage
+  | Message.SuggestedPostRefundedMessage
   | Message.VideoChatScheduledMessage
   | Message.VideoChatStartedMessage
   | Message.VideoChatEndedMessage
@@ -431,6 +444,7 @@ export type CommonMessageBundle =
   | Message.AnimationMessage
   | Message.AudioMessage
   | Message.ContactMessage
+  | Message.ChecklistMessage
   | Message.DiceMessage
   | Message.DocumentMessage
   | Message.GameMessage
