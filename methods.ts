@@ -885,6 +885,24 @@ export type ApiMethods<F> = {
     | ForceReply;
   }): Message.ChecklistMessage & Message.BusinessSentMessage;
 
+  /** Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned. */
+  editMessageChecklist(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be sent */
+    business_connection_id?: string;
+    /** Unique identifier for the target chat */
+    chat_id: number | string;
+    /** Unique identifier for the target message */
+    message_id: number | string;
+    /** An object for the checklist to send */
+    checklist: InputChecklist;
+    /** An object for an inline keyboard */
+    reply_markup?:
+    | InlineKeyboardMarkup
+    | ReplyKeyboardMarkup
+    | ReplyKeyboardRemove
+    | ForceReply;
+  }): Message.ChecklistMessage & Message.BusinessSentMessage;
+
   /** Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned. */
   sendDice(args: {
     /** Unique identifier of the business connection on behalf of which the message will be sent */
