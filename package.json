@@ -1,7 +1,7 @@
 {
   "name": "@tgify/types",
   "private": false,
-  "version": "9.4.3",
+  "version": "9.4.4",
   "description": "Type declarations for the Telegram API",
   "main": "index.js",
   "repository": {
